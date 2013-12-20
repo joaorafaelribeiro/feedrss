@@ -2,11 +2,10 @@
 <div class="col-md-2 col-xs-2" >
 <!-- 	<a href="@{Config.rss}" class="btn btn-lg btn-primary"><STRONG>INSCREVER</STRONG></a>
 <br/> -->
-<div id="menu" class="list-group" style="height: 580px;">
+<div class="list-group scroll-y" style="height: 540px; width: 100%;">
 	
 	#{list items:mc.feeds, as:'feed'}
-		%{active = (feed.id == mc.idFeed)? "active" : ""}%
-			<a id="feedLink${feed.id}" href="@{FeedRSS.messages(feed.id)}#feedLink${feed.id}" class="list-group-item ${active}" style="overflow: hidden;" target="corpo">
+			<a id="feedLink${feed.id}" href="@{FeedRSS.messages(feed.id)}#feedLink${feed.id}" class="list-group-item" style="overflow: hidden;" onclick="active(this);" target="corpo">
 			
 			<div style="white-space: nowrap; width: 110px; overflow: hidden;" class="pull-left">
 			 	${feed.title}  
@@ -17,4 +16,12 @@
 	#{/list}
 </div>
 </div>
-
+<script>
+	function active(link) {
+		$(".list-group-item").each(
+				function() {
+			$(this).removeClass("active");
+				});
+		$(link).addClass("active");
+	}
+</script>

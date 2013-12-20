@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>FeedRSS</title>
+<link rel="stylesheet" media="screen"
+	href="@{'/public/stylesheets/main.css'}">
+<link rel="stylesheet" media="screen"
+	href="@{'/public/stylesheets/bootstrap.css'}">
+<link rel="stylesheet" media="screen"
+	href="@{'/public/stylesheets/bootstrap-theme.css'}">
+#{get 'moreStyles' /}
+<script src="@{'/public/javascripts/jquery-1.6.4.min.js'}"		type="text/javascript" ></script>
+<script src="@{'/public/javascripts/bootstrap.js'}"				type="text/javascript" ></script>
+#{get 'moreScripts' /}
+</head>
+<body>
+	<div class="col-md-12 col-xs-12" style="height:100%; padding: 0px">
+		#{doLayout /}
+	</div>
+</body>
+</html>
