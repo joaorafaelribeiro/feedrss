@@ -1,0 +1,55 @@
+<script>
+function loadThumbnail(id) {
+	var image = $('#img'+id).attr('src');
+	if(image != '') return;
+	$('#img'+id).attr('src','@{'/public/images/ajax-loader.gif'}');
+	var url = #{jsAction @FeedRSS.showDesc(':idFeedMessage') /};
+	$.ajax({url: url({idFeedMessage: id}), dataType: 'json', contentType: 'charset=ISO-8859-15' })
+	  .done(function(data) {
+		 if(data.members.image === undefined) {
+			 $('#img'+id).attr('src','@{'/public/images/no-image.png'}');
+			 $('#desc'+id).html('');
+		 } else {
+			$('#img'+id).attr('src',data.members.image);
+			$('#desc'+id).html(data.members.description);
+		 }
+	  });
+}
+	 
+	
+	function reader(id,idFeed) {
+		var url = #{jsAction @FeedRSS.reader(':idFeedMessage') /};
+		$.ajax({url: url({idFeedMessage: id}), dataType: "json" }).done(function(data){
+			var box = $('#new'+id).clone();
+			$('#new'+id).fadeOut();
+			$('#new'+id).remove();
+			$('#size'+idFeed).html(data.members.count);
+			$('#total').html(data.members.count);
+			if(data.members.count > 12) {
+				$('#messages').append(box);
+				box.attr('id','new'+data.members.id);
+				$('#img'+id).attr('src',data.members.image);
+				$('#desc'+id).html(data.members.description);
+				$('#del'+id).attr('onclick','reader('+data.members.id+','+idFeed+')');
+				$('#l'+id).attr('href',data.members.link);
+				$('#m'+id).attr('href',data.members.link);
+				$('#date'+id).html(data.members.date);
+				$('#m'+id).html(data.members.title);
+				$('#date'+id).attr('id',data.members.id);
+				$('#img'+id).attr('id','img'+data.members.id);
+				$('#desc'+id).attr('id','desc'+data.members.id);
+				$('#del'+id).attr('id','del'+data.members.id);
+				$('#l'+id).attr('id','l'+data.members.id);
+				$('#m'+id).attr('id','m'+data.members.id);
+				loadThumbnail(data.members.id)
+			}
+		});
+		
+	}
+	
+</script>
+
+
+	#{list items:feedMessages, as:'feedMessage'}
+		#{feedBox id:feedMessage.id, title:feedMessage.title, description:feedMessage.description, pubDate:feedMessage.pubDate.format(), image:feedMessage.image, feedTitle:feedMessage.feed.title, link:feedMessage.link, idFeed:feedMessage.feed.id/}
+	#{/list}

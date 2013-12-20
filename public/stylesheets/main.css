@@ -1,0 +1,54 @@
+.title1{
+font-family: Arial, sans-serif;
+line-height: 1em;
+color: #fff9d6;
+font-size: 35px;
+font-weight: bold;
+}
+.title2{
+font-family: Arial, sans-serif;
+line-height: 1em;
+color: #bfbbf0;
+font-size: 35px;
+font-weight: bold;
+}
+
+.box_news {
+	height: 300px; 
+	overflow: hidden;	
+}
+.box_news:hover {
+	box-shadow: 10px 10px 5px #CECECE;
+}
+
+.star {
+	float: left;
+	position: absolute;
+	top: 2px;
+	left: 21px;
+	cursor: pointer;
+	color: #837A7B;
+}
+.star:hover {
+	color: black;
+	
+}
+
+.del {
+	float: right;
+	position: absolute;
+	top: 3px;
+	right: 21px;
+	color: #CECECE;
+	cursor: pointer;
+}
+.del:hover {
+	color: black;
+}
+#menu {
+	overflow: hidden;
+}
+#menu:hover {
+	overflow-y: scroll;
+}
+/* This button was generated using CSSButtonGenerator.com */

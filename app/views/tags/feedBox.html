@@ -1,0 +1,34 @@
+<div id='new${_id}' class='col-xs-6 col-md-3'><div class='panel panel-default' style='height: 400px; overflow: hidden;'>
+		<div class='panel-heading'>
+			<button id='del${_id}' type="button" class="close" onclick='reader(${_id},${_idFeed})'>&times;</button>
+			<div style='overflow: hidden; width: 160px; white-space: nowrap;'><small>${_feedTitle}</small></div>
+			<!-- <ul class='list-inline'>
+				<li><span class='glyphicon glyphicon-share'></span></li>
+				
+				<li>
+					
+				<span id='del${_id}' class='glyphicon glyphicon-trash'
+					onclick='reader(${_id},${_idFeed})' style='cursor: pointer;'></span></li>
+			</ul> -->
+			
+		</div>
+		<div class='panel-body'>
+			<a href='${_link}' id="l${_id}" target='_blank'> <img id='img${_id}'
+				src='${_image}' class='img-thumbnail'
+				style='min-height: 125px; max-height: 150px; width: 221px;' />
+			</a>
+			<h5>
+				<a href='${_link}' id="m${_id}" target='_blank'
+					style='color: #212121; text-decoration: none;'> ${_title}</a><br />
+				<small id="date${_id}">${_pubDate}</small>
+			</h5>
+			<pre id='desc${_id}' class='pre-scrollable'>
+				${_description}
+			</pre>
+			<br /> <br /> <br />
+		</div>
+	</div>
+</div>
+<script>
+loadThumbnail(${_id})
+</script>

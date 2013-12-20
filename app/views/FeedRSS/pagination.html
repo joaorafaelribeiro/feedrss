@@ -1,0 +1,32 @@
+%{start = ((mc.page-1) * 12)+1}%
+%{end = start +11}%
+%{end = (end > mc.total)? mc.total : end }%
+<div class="col-md-10">
+<div class="well" style="min-height: 60px; padding: 10px;">
+	<h4 class="pull-left">Search:</h4>
+	<form action="@{FeedRSS.search}" method="GET" class="navbar-form navbar-left" style="margin-top: 0px">
+			<div class="input-group" style="width: 200px; margin-right: 30px;">
+  				<input type="text" name="search" class="form-control" size="30" value="${mc.search}">
+		  		<span class="input-group-addon" style="cursor: pointer;"><span class="glyphicon glyphicon-search"></span></span>
+			</div>
+	</form>
+#{if mc.total > 12}
+<ul class="list-inline pull-right" >	
+	<li>
+		<p class="text-muted"><small>${start} - ${end}  de <span id="total">${mc.total}</span></small></p>
+	</li>
+	<li>    
+	    <div class="btn-group">
+	    	#{if start > 1}
+	  		<a href="@{FeedRSS.previous}" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span></a>
+	  		#{/if}
+	  		#{if end < mc.total}
+	  		<a href="@{FeedRSS.next}" class="btn btn-default"><span class="glyphicon glyphicon-chevron-right"></span></a>
+	  		#{/if}
+		</div>
+	</li>
+</ul>
+
+#{/if}
+</div>
+</div>

@@ -1,0 +1,5 @@
+09:17:40,498 INFO  ~ Starting /home/joaoraf/Documentos/Trabalho/workspace/feedrss
+09:17:41,286 WARN  ~ You're running Play! in DEV mode
+09:17:41,394 INFO  ~ Listening for HTTP on port 9000 (Waiting a first request to start) ...
+09:18:16,280 INFO  ~ Connected to jdbc:mysql://127.0.0.1/feeds?useUnicode=yes&characterEncoding=UTF-8&connectionCollation=utf8_general_ci
+09:18:17,389 INFO  ~ Application 'feedrss' is now started !

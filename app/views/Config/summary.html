@@ -1,0 +1,21 @@
+#{extends 'main.html' /}
+<div class="container">
+<center>
+<canvas id="cvs" width="1100" height="500">[No canvas support]</canvas>
+</center>
+<script>
+        function graph()
+        {
+            var bar = new RGraph.Bar('cvs', ${values})
+               
+                .Set('labels', #{verbatim}${labels}#{/verbatim})
+                .Set('gutter.bottom', '125')
+                .Set('gutter.left', 100)
+                .Set('gutter.top', 5)
+                .Set('gutter.right', 5)
+                .Set('text.angle', '45');
+          RGraph.Effects.Bar.Grow(bar);
+        }
+        graph();
+    </script>
+</div>

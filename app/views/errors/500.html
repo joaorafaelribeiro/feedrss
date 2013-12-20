@@ -1,0 +1,17 @@
+#{extends 'main.html'/}
+<div class="container">
+<div class="alert alert-danger">
+	 #{if play.mode.name() == 'DEV'}
+            #{500 exception /}
+        #{/if}
+        #{else}
+            <h1>Oops, an error occured</h1>
+            #{if exception instanceof play.exceptions.PlayException}
+                <p>
+                    This exception has been logged with id <strong>${exception.id}</strong>.
+                </p>
+            #{/if}
+        #{/else}
+</div>
+</div>
+

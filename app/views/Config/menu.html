@@ -1,0 +1,20 @@
+<ul class="nav nav-tabs">
+	<li class="#{get 'rss'/}">
+		<a href="@{Config.rss}">Manager RSS</a>
+	</li>
+	<li class="#{get 'conta'/}">
+		<a href="@{Config.conta}">My account</a>
+	</li>
+</ul>
+<br/>
+#{ifErrors}
+ 	<div class="alert alert-danger alert-dismissable">
+ 	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+ 	<ul>
+   #{errors}
+       <li>${error}</li>
+   #{/errors}
+   </ul>
+ 	</div>
+#{/ifErrors}
+<br/>

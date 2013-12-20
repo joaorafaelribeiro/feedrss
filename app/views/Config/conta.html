@@ -1,0 +1,43 @@
+#{extends 'main.html' /}
+<div class="container">
+	<br>
+	<br>
+	<div class="col-md-6 col-md-offset-3">
+	<h3>Account</h3>
+	<form class="form-horizontal well" method="post" action="">
+		
+		<table class="table">
+			<tr>
+				<td><label>Name:</label></td>
+				<td><input type="text" maxlength="255" class="form-control" id="inputEmail3" placeholder="Nome" value="${user.nome}"></td>
+			</tr>
+			<tr>
+				<td><label>E-mail:</label></td>
+				<td><input type="text" maxlength="255" class="form-control" id="inputEmail3" placeholder="E-mail" value="${user.email}"></td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<table style="width: 100%">
+						<tr>
+							<td><label>Password:</label></td>
+							<td><label>Confirm:</label></td>
+						</tr>
+						<tr>
+							<td><input type="password" maxlength="8" class="form-control" value="${user.senha}"/></td>
+							<td><input type="password" maxlength="8" class="form-control"/></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2" align="right">
+					<button type="submit" value="Enviar" class="btn btn-primary">Enviar</button>
+					<button type="reset" value="Enviar" class="btn btn-default">Limpar</button> 
+				</td>
+			</tr>
+		</table>
+		
+	</form>
+	</div>
+	
+</div>

@@ -1,0 +1,55 @@
+#{extends 'main.html' /}
+#{set rss:'active'/}
+<div class="container">
+<script>
+	
+	function changeCategory(idCat,idF) {
+		if(idCat == "" || idF == "" )
+			return;
+		var changeCategory = #{jsAction @Config.changeCategory(':idCategory',':idFeed') /};
+		$.ajax({url: changeCategory({idCategory: idCat, idFeed: idF})}).done();
+	}
+</script>
+<br/>
+<form action="@{Config.register}" method="post" class="form-inline" role="form">
+  <div class="form-group">
+    <input type="text" name="url" class="form-control" style="width: 390px;" placeholder="RSS">
+  </div>
+  <button type="submit" class="btn btn-primary">Registrar-se</button>
+</form>
+<br>
+<br>
+<table class="table table-condensed table-hover table-striped">
+	<tr>
+		<th><a class="btn btn-primary btn-xs" href="@{Config.summary}"><span class="glyphicon glyphicon-stats"></span></a></th>
+		<th>Nome</th>
+		<th>Categoria</th>
+		<th></th>
+	</tr>
+	#{list items:feeds, as:'feed'}
+		<tr>
+			<td><a class="btn btn-default btn-xs"><span class="glyphicon glyphicon-stats"></span></a></td>
+			<td width="70%"><a href="${feed.link}" target="_blank" style="text-decoration: none;">
+			${feed_index}. ${feed.title}</a></td>
+			<td>
+				<select onchange="changeCategory(this.value,${feed.id})">
+					<option value=""></option>
+					#{list items:categories, as:'category'}
+						#{if (category.id != feed.category?.id) }
+							<option value="${category.id}">${category.nome}</option>
+						#{/if}
+						#{else}
+							<option value="${category.id}" selected="selected">${category.nome}</option>
+						#{/else}
+					#{/list}
+				</select>
+			</td align="rigth" width="10px">
+			<td>
+				<a href="@{Config.removeFeed(feed.id)}" class="btn btn-danger btn-xs" onclick="confirm('Deseja remover este site de Notícias?');">
+				<span class="glyphicon glyphicon-remove"></span>
+				</a>
+			</td>
+		</tr>
+	#{/list}
+</table>
+</div>

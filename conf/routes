@@ -1,0 +1,26 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+*		/																	FeedRSS.home
+GET		/Feedrss/next														FeedRSS.next
+GET		/Feedrss/previous													FeedRSS.next
+GET		/Feedrss/reader?idFeedMessage={idFeedMessage}						FeedRSS.reader
+GET		/feedrss/showdesc?idFeedMessage={idFeedMessage}						FeedRSS.showDesc
+GET		/Config/rss															Config.rss
+GET		/config/conta														Config.conta						
+POST	/Config/register													Config.register
+GET		/Config/removeFeed?idFeed={idFeed}									Config.removeFeed
+GET		/config/changeCategory?idCategory={idCategory}&idFeed={idFeed}		Config.changeCategory
+
+
+# Ignore favicon requests
+GET     /favicon.ico                            404
+
+# Map static resources from the /app/public folder to the /public path
+GET     /public/                                staticDir:public
+# Import Secure routes
+*       /                                       module:secure
+# Catch all
+*       /{controller}/{action}                  {controller}.{action}
