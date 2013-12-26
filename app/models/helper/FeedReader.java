@@ -2,8 +2,11 @@ package models.helper;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.Authenticator;
 import java.net.HttpURLConnection;
+import java.net.InetSocketAddress;
 import java.net.MalformedURLException;
+import java.net.PasswordAuthentication;
 import java.net.Proxy;
 import java.net.ProxySelector;
 import java.net.URL;
@@ -31,7 +34,8 @@ public class FeedReader {
 	public Feed lerFeed(String url) throws ReaderFeedRSSException {
 		SyndFeed f =null;
 		try {
-		
+			
+
 			HttpURLConnection httpcon = (HttpURLConnection)new URL(url).openConnection();
 			httpcon.setConnectTimeout(5*1000);
 			httpcon.setRequestProperty("User-Agent", "Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11");
