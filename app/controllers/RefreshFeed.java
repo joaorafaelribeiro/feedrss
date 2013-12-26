@@ -1,8 +1,12 @@
 package controllers;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
 import models.Feed;
+import models.helper.CrawlerFactory;
+import exceptions.CrawlerException;
 import exceptions.ReaderFeedRSSException;
 import play.Logger;
 import play.jobs.Every;
@@ -19,5 +23,6 @@ public class RefreshFeed extends Job{
 					Feed f =Feed.findById(feeds.get(i).id);
 					f.update();
 			}
+		
 	}
 }

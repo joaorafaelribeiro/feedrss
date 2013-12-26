@@ -31,16 +31,15 @@ public class FeedReader {
 	public Feed lerFeed(String url) throws ReaderFeedRSSException {
 		SyndFeed f =null;
 		try {
-			/*System.setProperty("http.proxyHost","10.2.250.9");
-			System.setProperty("http.proxyPort", "3128");
-	        System.setProperty("http.proxyUser", "PRODEBTI/eu031222");
-	        System.setProperty("http.proxyPassword", "Cera1234");*/
+		
 			HttpURLConnection httpcon = (HttpURLConnection)new URL(url).openConnection();
 			httpcon.setConnectTimeout(5*1000);
 			httpcon.setRequestProperty("User-Agent", "Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11");
 			SyndFeedInput input = new SyndFeedInput();
 			f = input.build(new XmlReader(httpcon));
 			Feed feed = parse(f);
+			if(feed.image == null && feed.link != null)
+			feed.image = CrawlerFactory.createCrawlerLink(new URL(feed.link)).getIcon();
 			feed.feedMessages.addAll(parseEntries(f,feed));
 			feed.url = (url);
 			return feed;
@@ -80,8 +79,6 @@ public class FeedReader {
 		feed.feedMessages = new ArrayList<FeedMessage>();
 		if(f.getImage() !=null)
 			feed.image = (f.getImage().getUrl());
-		else
-			feed.image = "/public/images/icon_rss.png";
 		return feed;
 	}
 

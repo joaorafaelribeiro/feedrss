@@ -12,6 +12,7 @@ import models.FeedMessage;
 import models.FeedView;
 import models.Summary;
 import models.filter.FilterMessage;
+import models.helper.CrawlerFactory;
 import models.helper.CrawlerLink;
 import models.helper.FeedScreen;
 import play.cache.Cache;
@@ -47,10 +48,11 @@ public class FeedRSS extends Controller{
 		feedMessage.save();
 		FeedScreen mc = (FeedScreen) Cache.get("feedScreen");
 		JsonObject x = new JsonObject();
-		long count = FeedMessage.count("isRead = false and feed.id = ?",mc.getIdFeed());
+		long count = FeedMessage.count("isRead = false and feed.id = ?",feedMessage.feed.id);
 		x.addProperty("count", count);
 		if(count > 12) {
-			FeedMessage f = (FeedMessage) FeedMessage.find("isRead = false and feed.id = ? order by pubDate desc", mc.getIdFeed()).fetch(mc.getPage(), 12).get(11);
+			List<FeedMessage> feeds= FeedMessage.find("isRead = false and feed.id = ? order by pubDate desc", feedMessage.feed.id).fetch(mc.getPage(), 12);
+			FeedMessage f = feeds.get(feeds.size()-1);
 			x.addProperty("id", f.id);
 			x.addProperty("title", f.title);
 			x.addProperty("image", (f.image != null)?f.image:"");
@@ -79,7 +81,7 @@ public class FeedRSS extends Controller{
 			@Override
 			public void invoke(HttpResponse result) {
 				CrawlerLink cl = null;
-				cl =  new CrawlerLink(result.getString());
+				cl =  CrawlerFactory.createCrawlerLink(result.getString());
 				FeedMessage feedMessage = FeedMessage.findById(idFeedMessage);
 				feedMessage.image = cl.getImage();
 				if(feedMessage.description == null || "".equals(feedMessage.description))
@@ -102,15 +104,9 @@ public class FeedRSS extends Controller{
 	public static void index() {
 		FeedScreen mc = (FeedScreen) Cache.get("feedScreen");
 		mc.setFeeds(FeedView.findAll());
-		if(mc.getSearch() == null || "".equals(mc.getSearch())) {
-			List<FeedMessage> messages = FeedMessage.find("isRead = false and feed.id = ? order by pubDate desc",mc.getIdFeed()).fetch(mc.getPage(), 12); 
-			mc.setFeedMessages(messages);
-			mc.setTotal(FeedMessage.count("isRead = false and feed.id = ?",mc.getIdFeed()));
-		} else {
-			List<FeedMessage> messages = FeedMessage.find("isRead = false and title like ? order by pubDate desc","%"+mc.getSearch()+"%").fetch(mc.getPage(), 12); 
-			mc.setFeedMessages(messages);
-			mc.setTotal(FeedMessage.count("isRead = false and title = ? ","%"+mc.getSearch()+"%"));
-		}
+		List<FeedMessage> messages = FeedMessage.find("isRead = false and title like ? order by pubDate desc","%"+mc.getSearch()+"%").fetch(mc.getPage(), 12); 
+		mc.setFeedMessages(messages);
+		mc.setTotal(FeedMessage.count("isRead = false and title = ? ","%"+mc.getSearch()+"%"));
 		render(mc);	
 	}
 	
@@ -137,10 +133,8 @@ public class FeedRSS extends Controller{
 
 	
 	public static void search(String search) {
-		FeedScreen mc = (FeedScreen) Cache.get("feedScreen");
-		mc.setSearch(search);
-		mc.setPage(1);
-		index();
+		List<FeedMessage> feedMessages = FeedMessage.find("title like ? order by pubDate desc","%"+search+"%").fetch(); 
+		render(feedMessages);
 	}
 	
 	public static void messages(long feedId) {

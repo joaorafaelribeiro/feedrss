@@ -19,6 +19,6 @@ public class Category extends Model {
 	public List<Feed> feeds;
 	
 	public static List<Category> findAllOrderByName() {
-		return Category.find("select c from Category c where c.id in (select distinct(f.category.id) from Feed f) order by c.nome").fetch();
+		return Category.find("order by nome").fetch();
 	}
 }

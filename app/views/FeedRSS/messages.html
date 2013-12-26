@@ -24,7 +24,7 @@ function loadThumbnail(id) {
 			var box = $('#new'+id).clone();
 			$('#new'+id).fadeOut();
 			$('#new'+id).remove();
-			$('#size'+idFeed).html(data.members.count);
+			$('#size'+idFeed,parent.document).html(data.members.count);
 			$('#total').html(data.members.count);
 			if(data.members.count > 12) {
 				$('#messages').append(box);
@@ -50,7 +50,18 @@ function loadThumbnail(id) {
 	
 </script>
 
+<div class="col-md-12">
+<div class="well" style="min-height: 60px; padding: 10px;">
+	<h4 class="pull-left">Search:</h4>
+	<form action="@{FeedRSS.search}" method="GET" class="navbar-form navbar-left" style="margin-top: 0px">
+			<div class="input-group" style="width: 200px; margin-right: 30px;">
+  				<input type="text" name="search" class="form-control" size="30" >
+		  		<span class="input-group-addon" style="cursor: pointer;"><span class="glyphicon glyphicon-search"></span></span>
+			</div>
+	</form>
+</div>
+</div>
 
 	#{list items:feedMessages, as:'feedMessage'}
-		#{feedBox id:feedMessage.id, title:feedMessage.title, description:feedMessage.description, pubDate:feedMessage.pubDate.format(), image:feedMessage.image, feedTitle:feedMessage.feed.title, link:feedMessage.link, idFeed:feedMessage.feed.id/}
+		#{feedBox id:feedMessage.id, title:feedMessage.title, description:feedMessage.description, pubDate:feedMessage.pubDate.format(), image:feedMessage.image, feedTitle:feedMessage.feed.title, link:feedMessage.link, idFeed:feedMessage.feed.id, feedImage:feedMessage.feed.image/}
 	#{/list}

@@ -28,7 +28,7 @@
 	</tr>
 	#{list items:feeds, as:'feed'}
 		<tr>
-			<td><a class="btn btn-default btn-xs"><span class="glyphicon glyphicon-stats"></span></a></td>
+			<td><img src="${feed.image}" width="20px" height="20px" class="img-rounded pull-left"/></td>
 			<td width="70%"><a href="${feed.link}" target="_blank" style="text-decoration: none;">
 			${feed_index}. ${feed.title}</a></td>
 			<td>

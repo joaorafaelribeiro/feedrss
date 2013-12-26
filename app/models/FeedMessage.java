@@ -17,6 +17,7 @@ import javax.persistence.TemporalType;
 
 import exceptions.CrawlerException;
 import models.filter.FilterMessage;
+import models.helper.CrawlerFactory;
 import models.helper.CrawlerLink;
 import play.Logger;
 import play.db.jpa.JPA;
@@ -89,7 +90,7 @@ public class FeedMessage extends Model{
 		try {
 			CrawlerLink cl;
 			if(image == null) {
-				cl = new CrawlerLink(new URL(link));
+				cl = CrawlerFactory.createCrawlerLink(new URL(link));
 				image = cl.getImage();
 				if(description == null || "".equals(description.trim())) 
 					description = cl.getDescription();

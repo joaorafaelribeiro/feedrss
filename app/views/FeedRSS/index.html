@@ -1,8 +1,7 @@
 #{extends 'main.html' /}
 
 #{include './menu.html' /}
-#{include './pagination.html' /}
 <div id="messages" class="col-md-10 pull-right"  style="padding-left: 0px;">
-<iframe id="corpo" src="@{FeedRSS.messages}" height="490px" width="100%" style="border: 0px;" class="scroll-y">
+<iframe id="corpo" name="corpo" src="@{FeedRSS.messages}" height="500px" width="100%" style="border: 0px;" class="scroll-y">
 </iframe>
 </div>
