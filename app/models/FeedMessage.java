@@ -2,8 +2,10 @@ package models;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.lang.reflect.Type;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -15,8 +17,12 @@ import javax.persistence.Query;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
+
 import exceptions.CrawlerException;
-import models.filter.FilterMessage;
 import models.helper.CrawlerFactory;
 import models.helper.CrawlerLink;
 import play.Logger;
@@ -24,7 +30,7 @@ import play.db.jpa.JPA;
 import play.db.jpa.Model;
 
 @Entity
-public class FeedMessage extends Model{
+public class FeedMessage extends Model implements JsonSerializer<FeedMessage>{
 
 	public String description;
 	public String image;
@@ -78,11 +84,6 @@ public class FeedMessage extends Model{
 		EntityManager e = JPA.em();
 		e.createQuery("delete FeedMessage f where f.feed.id = :idFeed").setParameter("idFeed", idFeed).executeUpdate();
 	}
-	
-	
-	public static List<FeedMessage> findAll(FilterMessage filter) {
-			return FeedMessage.find(filter.getJQL()).fetch(filter.getPage(), 12);
-	}
 
 	
 	public void crawler() {
@@ -109,14 +110,27 @@ public class FeedMessage extends Model{
 	public static void clear() {
 		Calendar c = Calendar.getInstance();
 		c.setTime(new Date());
-		c.set(Calendar.DAY_OF_MONTH, c.get(Calendar.DAY_OF_MONTH)-7);
+		c.set(Calendar.MONTH, c.get(Calendar.MONTH)-1);
 		EntityManager em = JPA.em();
-		em.createQuery("delete from FeedMessage f where day(f.pubDate) = :day and month(f.pubDate) = :month and year(f.pubDate) = :year")
-		.setParameter("day", c.get(Calendar.DAY_OF_MONTH)).setParameter("month", c.get(Calendar.MONTH)).setParameter("year", c.get(Calendar.YEAR))
+		em.createQuery("delete from FeedMessage f where month(f.pubDate) = :month and year(f.pubDate) = :year")
+		.setParameter("month", c.get(Calendar.MONTH)).setParameter("year", c.get(Calendar.YEAR))
 		.executeUpdate();
 	}
-	
-	public static long count(FilterMessage filter) {
-			return FeedMessage.count(filter.getJQL());
+
+
+
+	@Override
+	public JsonElement serialize(FeedMessage arg0, Type arg1,
+			JsonSerializationContext arg2) {
+		JsonObject x = new JsonObject();
+		x.addProperty("title", title);
+		x.addProperty("id", id);
+		x.addProperty("image", (image != null)?image:"");
+		x.addProperty("idFeed", feed.id);
+		x.addProperty("nameFeed", feed.title);
+		x.addProperty("description", (description!= null)?description:"");
+		x.addProperty("date", SimpleDateFormat.getInstance().format(pubDate));
+		x.addProperty("link", link);
+		return x;
 	}
 }

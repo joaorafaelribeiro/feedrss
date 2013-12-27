@@ -13,8 +13,19 @@ import java.util.*;
 import java.io.*;
 import java.net.*;
 
+/**
+ * This class is responsible to create a summary of the web page associated with the link
+ * web page  
+ * @author joaoraf
+ *
+ */
 public class CrawlerFactory {
-
+	/**
+	 * Method responsible to create a summary of the link result
+	 * @param url
+	 * @return CrawlerLink 
+	 * @throws CrawlerException
+	 */
 	public static CrawlerLink createCrawlerLink(URL url) throws CrawlerException{
 		try {
 			CrawlerFactory factory = new CrawlerFactory(url);
@@ -29,7 +40,11 @@ public class CrawlerFactory {
 			throw new CrawlerException(e.getMessage(), e);
 		}
 	}
-	
+	/**
+	 * Method responsible to create a summary of the link result
+	 * @param url
+	 * @return CrawlerLink
+	 */
 	public static CrawlerLink createCrawlerLink(String url) {
 			CrawlerFactory factory = new CrawlerFactory(url);
 			CrawlerLink cl = new CrawlerLink();

@@ -29,19 +29,14 @@
 			</a>
 		</p>
 		
+		
+		
 		<div class="collapse navbar-collapse navbar-right">
 			<p class="navbar-text">
-			<a href="@@{Config.conta}" style="color: #999999;">
+				<a href="@@{Config.conta}" style="color: #999999;">
 				${session.username}
-			</a>
-			&nbsp;&nbsp;
-			
-			
-			<!-- <a href="@@{Secure.logout}" style="text-decoration: none;color: #999999;">
-				<span class="glyphicon glyphicon-off"></span>
-			</a> -->
-			
-		</p>
+				</a>
+			</p>
 			<ul class="nav navbar-nav ">
             <li id="fat-menu" class="dropdown">
               <a href="#" id="drop3" role="button" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span><b class="caret"></b></a>
@@ -52,7 +47,13 @@
                 <li role="presentation"><a role="menuitem" tabindex="-1" href="@@{Secure.logout}">Sair</a></li>
               </ul>
             </li>
-          </ul>		
+          </ul>
+          <form action="@{FeedRSS.search}" method="GET" class="navbar-form navbar-left" style="margin-top: 13px;" target="corpo">
+					<div class="input-group" style="width: 100px; margin-right: 30px;">
+		  				<input type="text" name="search"class="form-control input-sm" size="30" placeholder="Search" style="border-radius: 1em">
+					</div>
+			</form>
+          		
 		</div>
 	</nav>
 	<div class="col-md-12 col-xs-12" style="height:100%; padding: 0px">

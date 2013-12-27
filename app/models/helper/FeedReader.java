@@ -28,14 +28,23 @@ import com.sun.syndication.io.SyndFeedInput;
 import com.sun.syndication.io.XmlReader;
 
 import exceptions.ReaderFeedRSSException;
-
+/**
+ * This class is responsible for accessing, reading and processing the "xml" file, 
+ * generating classes of system business.
+ * @author joaoraf
+ *
+ */
 public class FeedReader {
-
+	/**
+	 * This method is responsible for accessing, reading and processing the "xml" file, 
+	 * generating classes of system business.
+	 * @param url
+	 * @return
+	 * @throws ReaderFeedRSSException
+	 */
 	public Feed lerFeed(String url) throws ReaderFeedRSSException {
 		SyndFeed f =null;
 		try {
-			
-
 			HttpURLConnection httpcon = (HttpURLConnection)new URL(url).openConnection();
 			httpcon.setConnectTimeout(5*1000);
 			httpcon.setRequestProperty("User-Agent", "Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11");

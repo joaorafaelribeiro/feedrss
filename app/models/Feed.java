@@ -24,6 +24,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import exceptions.ReaderFeedRSSException;
 import play.Logger;
 import play.db.jpa.JPA;
+import play.db.jpa.JPABase;
 import play.db.jpa.Model;
 @Entity
 public class Feed extends Model {
@@ -81,4 +82,14 @@ public class Feed extends Model {
 		BeanUtils.copyProperties(this, feedAtual);
 		this.save();
 	}
+
+	@Override
+	public Feed save() {
+		Feed feed = super.save();
+		for(FeedMessage f : this.feedMessages) 
+				f.crawler();
+		return feed;
+	}
+	
+	
 }

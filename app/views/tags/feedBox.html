@@ -1,35 +1,18 @@
-<div id='new${_id}' class='col-xs-6 col-md-3'><div class='panel panel-default' style='height: 400px; overflow: hidden;'>
-		<div class='panel-heading'>
-			<button id='del${_id}' type="button" class="close" onclick='reader(${_id},${_idFeed})'>&times;</button>
-			<div style='overflow: hidden; width: 160px; white-space: nowrap;'>
-				<img src="${_feedImage}" width="20px" height="20px" class="img-rounded pull-left"/>&nbsp;&nbsp; ${_feedTitle}</div>
-			<!-- <ul class='list-inline'>
-				<li><span class='glyphicon glyphicon-share'></span></li>
-				
-				<li>
-					
-				<span id='del${_id}' class='glyphicon glyphicon-trash'
-					onclick='reader(${_id},${_idFeed})' style='cursor: pointer;'></span></li>
-			</ul> -->
-			
-		</div>
-		<div class='panel-body'>
-			<a href='${_link}' id="l${_id}" target='_blank'> <img id='img${_id}'
-				src='${_image}' class='img-thumbnail'
-				style='min-height: 125px; max-height: 150px; width: 221px;' />
+<div id='new${_id}' class='col-xs-6 col-md-3'>
+	<div class='thumbnail' style='overflow: hidden;'>
+			<a href='${_link}' id="l${_id}" target='_blank' onclick='reader(${_id},${_idFeed})'> <img id='img${_id}'
+				src='${_image}' width="100%" height="150px"  data-src="holder.js/100%x180" />
 			</a>
-			<h5>
-				<a href='${_link}' id="m${_id}" target='_blank'
+			<div class="caption">
+				<a href='${_link}' id="m${_id}" target='_blank' onclick='reader(${_id},${_idFeed})'
 					style='color: #212121; text-decoration: none;'> ${_title}</a><br />
-				<small id="date${_id}">${_pubDate}</small>
-			</h5>
-			<pre id='desc${_id}' class='pre-scrollable scroll-y'>
-				${_description}
-			</pre>
-			<br /> <br /> <br />
-		</div>
+				<small id="date${_id}" class="text-muted">${_pubDate}</small>
+				<hr/>
+				<p class="text-muted">
+				<img src="${_feedImage}" width="20px" height="20px" class="img-rounded pull-left"/>
+<!-- 				<button id='del${_id}' type="button" class="close" onclick='reader(${_id},${_idFeed})'>&times;</button>
+ -->				<small>	&nbsp;&nbsp; ${_feedTitle}</small>
+				</p>
+			</div>
 	</div>
 </div>
-<script>
-loadThumbnail(${_id})
-</script>

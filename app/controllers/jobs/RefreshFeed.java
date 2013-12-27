@@ -1,4 +1,4 @@
-package controllers;
+package controllers.jobs;
 
 import java.net.Authenticator;
 import java.net.MalformedURLException;

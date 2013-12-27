@@ -11,7 +11,6 @@ import javax.persistence.EntityManager;
 import models.FeedMessage;
 import models.FeedView;
 import models.Summary;
-import models.filter.FilterMessage;
 import models.helper.CrawlerFactory;
 import models.helper.CrawlerLink;
 import models.helper.FeedScreen;
@@ -28,6 +27,7 @@ import play.utils.Action;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
@@ -46,10 +46,10 @@ public class FeedRSS extends Controller{
 		FeedMessage feedMessage = FeedMessage.findById(idFeedMessage);
 		feedMessage.isRead = true;
 		feedMessage.save();
-		FeedScreen mc = (FeedScreen) Cache.get("feedScreen");
-		JsonObject x = new JsonObject();
+		//FeedScreen mc = (FeedScreen) Cache.get("feedScreen");
+		//JsonObject x = new JsonObject();
 		long count = FeedMessage.count("isRead = false and feed.id = ?",feedMessage.feed.id);
-		x.addProperty("count", count);
+		/*x.addProperty("count", count);
 		if(count > 12) {
 			List<FeedMessage> feeds= FeedMessage.find("isRead = false and feed.id = ? order by pubDate desc", feedMessage.feed.id).fetch(mc.getPage(), 12);
 			FeedMessage f = feeds.get(feeds.size()-1);
@@ -61,8 +61,8 @@ public class FeedRSS extends Controller{
 			x.addProperty("description", (f.description!= null)?f.description:"");
 			x.addProperty("date", SimpleDateFormat.getInstance().format(f.pubDate));
 			x.addProperty("link", f.link);
-		}
-		renderJSON(x);
+		}*/
+		renderJSON(new JsonPrimitive(count));
 	}
 	public static void setLike(long idFeedMessage) {
 		FeedMessage feedMessage = FeedMessage.findById(idFeedMessage);
@@ -73,7 +73,6 @@ public class FeedRSS extends Controller{
 	public static void showDesc(final long idFeedMessage) {
 		FeedMessage feedMessage = FeedMessage.findById(idFeedMessage);
 		WSRequest request = WS.withEncoding("ISO-8859-1").url(feedMessage.link);
-		//request.setHeader("User-Agent", "Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11");
 		request.timeout = (30*1000);
 		Promise<HttpResponse> p = request.getAsync();
 		if(feedMessage.image == null) {
@@ -88,16 +87,10 @@ public class FeedRSS extends Controller{
 				feedMessage.description = cl.getDescription();
 				feedMessage.save();
 				feedMessage.em().flush();
-				JsonObject x = new JsonObject();
-				x.addProperty("image", feedMessage.image);
-				x.addProperty("description", feedMessage.description);
-				renderJSON(x);
+				renderJSON(feedMessage,feedMessage);
 			}
 		}); }else {
-			JsonObject x = new JsonObject();
-			x.addProperty("image", feedMessage.image);
-			x.addProperty("description", feedMessage.description);
-			renderJSON(x);
+			renderJSON(feedMessage,feedMessage);
 		}
 	}
 	
@@ -109,31 +102,13 @@ public class FeedRSS extends Controller{
 		mc.setTotal(FeedMessage.count("isRead = false and title = ? ","%"+mc.getSearch()+"%"));
 		render(mc);	
 	}
-	
-	public static void next() {
-		FeedScreen mc = (FeedScreen) Cache.get("feedScreen");
-		mc.setPage(mc.getPage()+1);
-		index();
-	}
-	
-	public static void previous() {
-		FeedScreen mc = (FeedScreen) Cache.get("feedScreen");
-		mc.setPage(mc.getPage()-1);
-		index();
-	}
-	
-	public static void change(int idFeed) {
-		FeedScreen mc = (FeedScreen) Cache.get("feedScreen");
-		mc.setPage(1);
-		mc.setIdFeed(idFeed);
-		mc.setSearch(null);
-		index();
-	}
 
 
 	
 	public static void search(String search) {
-		List<FeedMessage> feedMessages = FeedMessage.find("title like ? order by pubDate desc","%"+search+"%").fetch(); 
+		List<FeedMessage> feedMessages = new ArrayList<FeedMessage>();
+		if(search != null && !"".equals(search.trim()))
+		 feedMessages = FeedMessage.find("title like ? order by pubDate desc","%"+search+"%").fetch(); 
 		render(feedMessages);
 	}
 	
