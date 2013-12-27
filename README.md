@@ -16,5 +16,5 @@ The system provide the following features:
 * Loading on demand;
 * Shared your news;
 
-ShortScreens
-------------
+ScreenShot
+----------
