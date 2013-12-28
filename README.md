@@ -20,3 +20,5 @@ ScreenShot
 ----------
 
 ![Alt login screen](https://raw.github.com/joaorafaelribeiro/feedrss/master/public/images/screenshot/screen1.jpg "Login Screen")
+
+![Alt config screen](https://raw.github.com/joaorafaelribeiro/feedrss/master/public/images/screenshot/screen2.jpg "Config Screen")

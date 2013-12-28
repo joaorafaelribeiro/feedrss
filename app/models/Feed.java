@@ -59,7 +59,7 @@ public class Feed extends Model {
 					this.feedMessages.add(feedMessage);
 				}
 			}
-		} catch (ReaderFeedRSSException e) {
+		} catch (Throwable e) {
 			Logger.warn("Error :"+e.getMessage()+" "+url);
 		} finally {
 			this.dateExpired = new Date(System.currentTimeMillis() + (new Random(System.currentTimeMillis()).nextInt(30)*1000*60));
