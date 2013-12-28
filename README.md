@@ -18,3 +18,5 @@ The system provide the following features:
 
 ScreenShot
 ----------
+
+![Alt login screen](https://raw.github.com/joaorafaelribeiro/feedrss/master/public/images/screenshot/screen1.jpg "Login Screen")
