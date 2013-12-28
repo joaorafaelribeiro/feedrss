@@ -39,29 +39,14 @@ public class FeedRSS extends Controller{
 		FeedScreen fs = new FeedScreen();
 		fs.setPage(1);
 		Cache.set("feedScreen", fs);
-		index();
+		index(0);
 	}
 	
 	public static void reader(long idFeedMessage) {
 		FeedMessage feedMessage = FeedMessage.findById(idFeedMessage);
 		feedMessage.isRead = true;
 		feedMessage.save();
-		//FeedScreen mc = (FeedScreen) Cache.get("feedScreen");
-		//JsonObject x = new JsonObject();
 		long count = FeedMessage.count("isRead = false and feed.id = ?",feedMessage.feed.id);
-		/*x.addProperty("count", count);
-		if(count > 12) {
-			List<FeedMessage> feeds= FeedMessage.find("isRead = false and feed.id = ? order by pubDate desc", feedMessage.feed.id).fetch(mc.getPage(), 12);
-			FeedMessage f = feeds.get(feeds.size()-1);
-			x.addProperty("id", f.id);
-			x.addProperty("title", f.title);
-			x.addProperty("image", (f.image != null)?f.image:"");
-			x.addProperty("idFeed", f.feed.id);
-			x.addProperty("nameFeed", f.feed.title);
-			x.addProperty("description", (f.description!= null)?f.description:"");
-			x.addProperty("date", SimpleDateFormat.getInstance().format(f.pubDate));
-			x.addProperty("link", f.link);
-		}*/
 		renderJSON(new JsonPrimitive(count));
 	}
 	public static void setLike(long idFeedMessage) {
@@ -94,13 +79,10 @@ public class FeedRSS extends Controller{
 		}
 	}
 	
-	public static void index() {
-		FeedScreen mc = (FeedScreen) Cache.get("feedScreen");
-		mc.setFeeds(FeedView.findAll());
-		List<FeedMessage> messages = FeedMessage.find("isRead = false and title like ? order by pubDate desc","%"+mc.getSearch()+"%").fetch(mc.getPage(), 12); 
-		mc.setFeedMessages(messages);
-		mc.setTotal(FeedMessage.count("isRead = false and title = ? ","%"+mc.getSearch()+"%"));
-		render(mc);	
+	public static void index(long feedId) {
+		List<FeedView> feeds = FeedView.findAll(); 
+		List<FeedMessage> feedMessages = FeedMessage.find("isRead = false and feed.id = ? order by pubDate desc", feedId).fetch();
+		render(feedId,feeds,feedMessages);	
 	}
 
 
@@ -112,8 +94,5 @@ public class FeedRSS extends Controller{
 		render(feedMessages);
 	}
 	
-	public static void messages(long feedId) {
-		List<FeedMessage> feedMessages = FeedMessage.find("isRead = false and feed.id = ? order by pubDate desc", feedId).fetch();
-		render(feedMessages);
-	}
+	
 }

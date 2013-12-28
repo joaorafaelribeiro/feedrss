@@ -1,7 +1,19 @@
 #{extends 'main.html' /}
-
+<script>
+	function reader(id,idFeed) {
+		var url = #{jsAction @FeedRSS.reader(':idFeedMessage') /};
+		$.ajax({url: url({idFeedMessage: id}), dataType: "json" }).done(
+			function(data){
+				$('#size'+idFeed,parent.document).html(data.value);
+		});
+		
+	}
+	
+</script>
 #{include './menu.html' /}
 <div id="messages" class="col-md-10 pull-right"  style="padding-left: 0px;">
-<iframe id="corpo" name="corpo" src="@{FeedRSS.messages}" height="550px" width="100%" style="border: 0px;">
-</iframe>
+	#{list items:feedMessages, as:'feedMessage'}
+		#{feedBox id:feedMessage.id, title:feedMessage.title, description:feedMessage.description, pubDate:feedMessage.pubDate.format(), image:feedMessage.image, feedTitle:feedMessage.feed.title, link:feedMessage.link, idFeed:feedMessage.feed.id, feedImage:feedMessage.feed.image/}
+		
+	#{/list}
 </div>

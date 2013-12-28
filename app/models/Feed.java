@@ -51,7 +51,6 @@ public class Feed extends Model {
 	}
 	
 	public void update()  {
-		//if(getSize() > 0) return;
 		Feed feedAtual;
 		try {
 			feedAtual = new FeedReader().lerFeed(url.trim());
@@ -62,10 +61,9 @@ public class Feed extends Model {
 			}
 		} catch (ReaderFeedRSSException e) {
 			Logger.warn("Error :"+e.getMessage()+" "+url);
-			//Logger.error(e, e.getMessage());
 		} finally {
 			this.dateExpired = new Date(System.currentTimeMillis() + (new Random(System.currentTimeMillis()).nextInt(30)*1000*60));
-			this.save();			
+			this.save();
 		}
 	}
 	
@@ -81,15 +79,7 @@ public class Feed extends Model {
 		Feed feedAtual = new FeedReader().lerFeed(url);
 		BeanUtils.copyProperties(this, feedAtual);
 		this.save();
+		for(FeedMessage f : feedMessages)
+			f.crawler();
 	}
-
-	@Override
-	public Feed save() {
-		Feed feed = super.save();
-		for(FeedMessage f : this.feedMessages) 
-				f.crawler();
-		return feed;
-	}
-	
-	
 }

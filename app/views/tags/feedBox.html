@@ -1,18 +1,25 @@
 <div id='new${_id}' class='col-xs-6 col-md-3'>
-	<div class='thumbnail' style='overflow: hidden;'>
+	<div class='thumbnail shawdon' style="height: 350px;">
 			<a href='${_link}' id="l${_id}" target='_blank' onclick='reader(${_id},${_idFeed})'> <img id='img${_id}'
-				src='${_image}' width="100%" height="150px"  data-src="holder.js/100%x180" />
+				src='${_image}' width="100%" height="150px"  data-src="holder.js/100%x180" border="1"/>
 			</a>
-			<div class="caption">
+			<div class="caption" style="height: 170px;">
 				<a href='${_link}' id="m${_id}" target='_blank' onclick='reader(${_id},${_idFeed})'
 					style='color: #212121; text-decoration: none;'> ${_title}</a><br />
 				<small id="date${_id}" class="text-muted">${_pubDate}</small>
-				<hr/>
+				<hr style="margin: 8px;"/>
 				<p class="text-muted">
-				<img src="${_feedImage}" width="20px" height="20px" class="img-rounded pull-left"/>
-<!-- 				<button id='del${_id}' type="button" class="close" onclick='reader(${_id},${_idFeed})'>&times;</button>
- -->				<small>	&nbsp;&nbsp; ${_feedTitle}</small>
+					<img src="${_feedImage}" width="20px" height="20px" class="img-rounded"/>
+					<small>	&nbsp;&nbsp; ${_feedTitle}</small>
 				</p>
+				
 			</div>
+			<p class="text-muted pull-right" style="margin-bottom: -8px;">
+					<small>
+					<a tabindex="-1" href="javascript:void(0)" onclick="reader(${_id},${_idFeed}); $('#new${_id}').fadeOut();">read</a> //
+                	<a tabindex="-1" href="javascript:void(0)">share</a> //
+                	<a tabindex="-1" href="javascript:void(0)">summary</a>
+                	</small>
+			</p>
 	</div>
 </div>

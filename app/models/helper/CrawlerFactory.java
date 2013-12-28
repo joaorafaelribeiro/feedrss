@@ -13,6 +13,8 @@ import java.util.*;
 import java.io.*;
 import java.net.*;
 
+import play.libs.WS;
+
 /**
  * This class is responsible to create a summary of the web page associated with the link
  * web page  
@@ -58,7 +60,8 @@ public class CrawlerFactory {
 	private Source source;
 	
 	private CrawlerFactory(URL url) throws IOException{
-		source = new Source(url);
+		
+		source = new Source(WS.url(url.toString()).get().getString());
 		source.fullSequentialParse();
 	}
 	

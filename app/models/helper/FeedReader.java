@@ -2,6 +2,7 @@ package models.helper;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.Authenticator;
 import java.net.HttpURLConnection;
 import java.net.InetSocketAddress;
@@ -18,6 +19,7 @@ import java.util.Properties;
 import java.util.Random;
 
 import play.Logger;
+import play.libs.WS;
 import models.Feed;
 import models.FeedMessage;
 
@@ -45,14 +47,13 @@ public class FeedReader {
 	public Feed lerFeed(String url) throws ReaderFeedRSSException {
 		SyndFeed f =null;
 		try {
-			HttpURLConnection httpcon = (HttpURLConnection)new URL(url).openConnection();
-			httpcon.setConnectTimeout(5*1000);
-			httpcon.setRequestProperty("User-Agent", "Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11");
-			SyndFeedInput input = new SyndFeedInput();
-			f = input.build(new XmlReader(httpcon));
+			//HttpURLConnection httpcon = (HttpURLConnection)new URL(url).openConnection();
+			//httpcon.setConnectTimeout(5*1000);
+			//httpcon.setRequestProperty("User-Agent", "Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11");
+			SyndFeedInput input = new SyndFeedInput(false);
+			f = input.build(new XmlReader(WS.url(url).get().getStream()));
+			f.setEncoding("UTF-8");
 			Feed feed = parse(f);
-			if(feed.image == null && feed.link != null)
-			feed.image = CrawlerFactory.createCrawlerLink(new URL(feed.link)).getIcon();
 			feed.feedMessages.addAll(parseEntries(f,feed));
 			feed.url = (url);
 			return feed;
@@ -69,13 +70,10 @@ public class FeedReader {
 			FeedMessage message = new FeedMessage();
 			if(aux.getDescription() != null) {
 				message.description = (aux.getDescription().getValue());
-				message.description = message.description.replaceAll("\\<.*?>","").replaceAll("&.*?;","").replaceAll("\\[a-zA-Z]", "").trim();
 			}
 			message.link = (aux.getLink());
 			message.title = (aux.getTitle());
 			message.pubDate = new Date();
-			/*if(aux.getPublishedDate() != null)
-			message.pubDate = (aux.getPublishedDate());*/
 			message.isRead = false;
 			messages.add(message);
 			

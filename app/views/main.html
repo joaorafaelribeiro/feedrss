@@ -22,15 +22,13 @@
 #{get 'moreScripts' /}
 </head>
 <body>
+	<div style="height: 100%">
 	<nav class="navbar navbar-inverse navbar-fixed-top navbar-static-top" style="position: static;">
 		<p class="navbar-text">
 			<a href="@{FeedRSS.home}" style="text-decoration: none;"> <span
 				class="title1">Feed</span><span class="title2">RSS</span>
 			</a>
 		</p>
-		
-		
-		
 		<div class="collapse navbar-collapse navbar-right">
 			<p class="navbar-text">
 				<a href="@@{Config.conta}" style="color: #999999;">
@@ -39,15 +37,15 @@
 			</p>
 			<ul class="nav navbar-nav ">
             <li id="fat-menu" class="dropdown">
-              <a href="#" id="drop3" role="button" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span><b class="caret"></b></a>
-              <ul class="dropdown-menu" role="menu" aria-labelledby="drop3">
-                <li role="presentation"><a role="menuitem" tabindex="-1" href="@{Config.rss}">Configuration</a></li>
-                <li role="presentation"><a role="menuitem" tabindex="-1" href="@{Config.conta}">Account</a></li>
-                <li role="presentation" class="divider"></li>
-                <li role="presentation"><a role="menuitem" tabindex="-1" href="@@{Secure.logout}">Sair</a></li>
+              <a href="#" id="drop3" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span><b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a tabindex="-1" href="@{Config.rss}">Configuration</a></li>
+                <li><a tabindex="-1" href="@{Config.conta}">Account</a></li>
+                <li class="divider"></li>
+                <li><a tabindex="-1" href="@@{Secure.logout}">Sair</a></li>
               </ul>
             </li>
-          </ul>
+          	</ul>
           <form action="@{FeedRSS.search}" method="GET" class="navbar-form navbar-left" style="margin-top: 13px;" target="corpo">
 					<div class="input-group" style="width: 100px; margin-right: 30px;">
 		  				<input type="text" name="search"class="form-control input-sm" size="30" placeholder="Search" style="border-radius: 1em">
@@ -60,11 +58,10 @@
 		#{doLayout /}
 	</div>
 	<footer>
-		<div class="col-md-5 col-md-offset-3">
 		<p class="text-muted text-center">
 			<strong>FeedRSS | 2011 - 2013 | © Todos os direitos reservados</strong>
 		</p>
-		</div>
 	</footer>
+	</div>
 </body>
 </html>
